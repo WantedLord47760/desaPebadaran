@@ -9,7 +9,8 @@ envsubst '${PORT}' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/defa
 
 echo "--- Preparing Laravel Application ---"
 
-# Create storage symlink
+# Package discovery & Create storage symlink
+php artisan package:discover --ansi || true
 php artisan storage:link --force || true
 
 # Optimize & Cache Laravel

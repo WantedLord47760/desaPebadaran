@@ -10,7 +10,7 @@ RUN npm run build
 FROM composer:2 AS composer-builder
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs --no-scripts
 
 # Stage 3: Production Image (PHP 8.2 FPM + Nginx)
 FROM php:8.2-fpm-alpine
