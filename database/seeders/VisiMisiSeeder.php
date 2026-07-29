@@ -9,11 +9,10 @@ class VisiMisiSeeder extends Seeder
 {
     public function run(): void
     {
-        VisiMisi::create([
-            'tipe' => 'visi',
-            'konten' => 'Mewujudkan Desa / Kampung Pebadaran Yang "SANTRI" Sejahtera, Aman, Nyaman, Tertib, Religius, dan Inovatif',
-            'urutan' => 1
-        ]);
+        VisiMisi::updateOrCreate(
+            ['tipe' => 'visi', 'urutan' => 1],
+            ['konten' => 'Mewujudkan Desa / Kampung Pebadaran Yang "SANTRI" Sejahtera, Aman, Nyaman, Tertib, Religius, dan Inovatif']
+        );
 
         $misi = [
             'Meningkatkan Keimanan dan Ketaqwaan Pada Allah SWT.',
@@ -26,11 +25,10 @@ class VisiMisiSeeder extends Seeder
         ];
 
         foreach ($misi as $index => $item) {
-            VisiMisi::create([
-                'tipe' => 'misi',
-                'konten' => $item,
-                'urutan' => $index + 1
-            ]);
+            VisiMisi::updateOrCreate(
+                ['tipe' => 'misi', 'urutan' => $index + 1],
+                ['konten' => $item]
+            );
         }
     }
 }

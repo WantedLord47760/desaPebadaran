@@ -23,7 +23,10 @@ class StrukturOrganisasiSeeder extends Seeder
         ];
 
         foreach ($struktur as $item) {
-            StrukturOrganisasi::create($item);
+            StrukturOrganisasi::updateOrCreate(
+                ['nama' => $item['nama'], 'jabatan' => $item['jabatan']],
+                $item
+            );
         }
     }
 }
