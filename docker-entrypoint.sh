@@ -10,6 +10,11 @@ rm -rf /etc/nginx/conf.d/* /etc/nginx/http.d/*
 # Substitute $PORT into full standalone /etc/nginx/nginx.conf
 envsubst '${PORT}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
+# Fallback APP_URL if empty or malformed
+if [ -z "$APP_URL" ] || [ "$APP_URL" = "https://" ] || [ "$APP_URL" = "http://" ]; then
+    export APP_URL="http://localhost"
+fi
+
 echo "--- Preparing Laravel Application ---"
 
 # Package discovery & Create storage symlink
