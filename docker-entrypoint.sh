@@ -15,9 +15,45 @@ if [ -z "$APP_URL" ] || [ "$APP_URL" = "https://" ] || [ "$APP_URL" = "http://" 
     export APP_URL="http://localhost"
 fi
 
-# Fallback DB_HOST if empty
-if [ -z "$DB_HOST" ]; then
-    export DB_HOST="${MYSQLHOST:-mysql.railway.internal}"
+# Automatic Railway MySQL Environment Variable Auto-detection
+if [ -n "$MYSQL_URL" ] && ! echo "$MYSQL_URL" | grep -q '\${'; then
+    export DATABASE_URL="$MYSQL_URL"
+fi
+
+if [ -z "$DB_HOST" ] || echo "$DB_HOST" | grep -q '\${'; then
+    if [ -n "$MYSQLHOST" ] && ! echo "$MYSQLHOST" | grep -q '\${'; then
+        export DB_HOST="$MYSQLHOST"
+    elif [ -n "$RAILWAY_PRIVATE_DOMAIN" ]; then
+        export DB_HOST="$RAILWAY_PRIVATE_DOMAIN"
+    fi
+fi
+
+if [ -z "$DB_PORT" ] || echo "$DB_PORT" | grep -q '\${'; then
+    if [ -n "$MYSQLPORT" ]; then
+        export DB_PORT="$MYSQLPORT"
+    fi
+fi
+
+if [ -z "$DB_DATABASE" ] || echo "$DB_DATABASE" | grep -q '\${'; then
+    if [ -n "$MYSQLDATABASE" ]; then
+        export DB_DATABASE="$MYSQLDATABASE"
+    elif [ -n "$MYSQL_DATABASE" ]; then
+        export DB_DATABASE="$MYSQL_DATABASE"
+    fi
+fi
+
+if [ -z "$DB_USERNAME" ] || echo "$DB_USERNAME" | grep -q '\${'; then
+    if [ -n "$MYSQLUSER" ]; then
+        export DB_USERNAME="$MYSQLUSER"
+    fi
+fi
+
+if [ -z "$DB_PASSWORD" ] || echo "$DB_PASSWORD" | grep -q '\${'; then
+    if [ -n "$MYSQLPASSWORD" ]; then
+        export DB_PASSWORD="$MYSQLPASSWORD"
+    elif [ -n "$MYSQL_ROOT_PASSWORD" ]; then
+        export DB_PASSWORD="$MYSQL_ROOT_PASSWORD"
+    fi
 fi
 
 echo "--- Preparing Laravel Application ---"
