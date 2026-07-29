@@ -54,6 +54,13 @@ COPY --from=node-builder /app/public/build /var/www/html/public/build
 # Copy Nginx configuration template
 COPY .nginx/nginx.conf /etc/nginx/nginx.conf.template
 
+# Configure PHP-FPM to listen on TCP port 9000
+RUN sed -i 's|^listen = .*|listen = 127.0.0.1:9000|' /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i 's|^;listen.owner = .*|listen.owner = www-data|' /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i 's|^;listen.group = .*|listen.group = www-data|' /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i 's|^user = .*|user = www-data|' /usr/local/etc/php-fpm.d/www.conf \
+    && sed -i 's|^group = .*|group = www-data|' /usr/local/etc/php-fpm.d/www.conf
+
 # Set appropriate permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache \
