@@ -52,7 +52,7 @@ COPY --from=composer-builder /app/vendor /var/www/html/vendor
 COPY --from=node-builder /app/public/build /var/www/html/public/build
 
 # Copy Nginx configuration template
-COPY .nginx/nginx.conf /etc/nginx/conf.d/default.template
+COPY .nginx/nginx.conf /etc/nginx/http.d/default.template
 
 # Set appropriate permissions
 RUN chown -R www-data:www-data /var/www/html \
