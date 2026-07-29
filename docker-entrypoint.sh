@@ -78,6 +78,5 @@ if [ "$SEED_ON_DEPLOY" = "true" ]; then
     php artisan db:seed --force
 fi
 
-echo "--- Starting PHP-FPM & Nginx on port $PORT ---"
-php-fpm -D
-exec nginx -g "daemon off;"
+echo "--- Starting Application via Supervisord on port $PORT ---"
+exec supervisord -c /etc/supervisord.conf

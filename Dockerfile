@@ -12,12 +12,13 @@ WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs --no-scripts
 
-# Stage 3: Production Image (PHP 8.2 FPM + Nginx)
+# Stage 3: Production Image (PHP 8.2 FPM + Nginx + Supervisor)
 FROM php:8.2-fpm-alpine
 
-# Install system dependencies and PHP extensions
+# Install system dependencies, Nginx, Supervisor, and PHP extensions
 RUN apk add --no-cache \
     nginx \
+    supervisor \
     gettext \
     freetype-dev \
     libjpeg-turbo-dev \
@@ -51,17 +52,11 @@ COPY . /var/www/html
 COPY --from=composer-builder /app/vendor /var/www/html/vendor
 COPY --from=node-builder /app/public/build /var/www/html/public/build
 
-# Copy Nginx configuration template
+# Copy Nginx & Supervisord configurations
 COPY .nginx/nginx.conf /etc/nginx/nginx.conf.template
+COPY .docker/supervisord.conf /etc/supervisord.conf
 
-# Configure PHP-FPM to listen on TCP port 9000
-RUN sed -i 's|^listen = .*|listen = 127.0.0.1:9000|' /usr/local/etc/php-fpm.d/www.conf \
-    && sed -i 's|^;listen.owner = .*|listen.owner = www-data|' /usr/local/etc/php-fpm.d/www.conf \
-    && sed -i 's|^;listen.group = .*|listen.group = www-data|' /usr/local/etc/php-fpm.d/www.conf \
-    && sed -i 's|^user = .*|user = www-data|' /usr/local/etc/php-fpm.d/www.conf \
-    && sed -i 's|^group = .*|group = www-data|' /usr/local/etc/php-fpm.d/www.conf
-
-# Set appropriate permissions
+# Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod +x /var/www/html/docker-entrypoint.sh
