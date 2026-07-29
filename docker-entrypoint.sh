@@ -15,6 +15,11 @@ if [ -z "$APP_URL" ] || [ "$APP_URL" = "https://" ] || [ "$APP_URL" = "http://" 
     export APP_URL="http://localhost"
 fi
 
+# Fallback DB_HOST if empty
+if [ -z "$DB_HOST" ]; then
+    export DB_HOST="${MYSQLHOST:-mysql.railway.internal}"
+fi
+
 echo "--- Preparing Laravel Application ---"
 
 # Package discovery & Create storage symlink
