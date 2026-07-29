@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
 
-# Default PORT to 80 if not set
-export PORT=${PORT:-80}
+# Default PORT to 8080 if not set by Railway
+export PORT=${PORT:-8080}
 
 # Clean any existing conf.d / http.d defaults to prevent conflict
 rm -rf /etc/nginx/conf.d/* /etc/nginx/http.d/*
