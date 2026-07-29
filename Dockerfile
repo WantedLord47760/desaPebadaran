@@ -58,6 +58,7 @@ COPY .docker/supervisord.conf /etc/supervisord.conf
 
 # Configure PHP-FPM to listen on Unix Socket /var/run/php-fpm.sock
 RUN sed -i 's|^listen = .*|listen = /var/run/php-fpm.sock|' /usr/local/etc/php-fpm.d/zz-docker.conf \
+    && echo "listen.mode = 0666" >> /usr/local/etc/php-fpm.d/zz-docker.conf \
     && sed -i 's|^listen = .*|listen = /var/run/php-fpm.sock|' /usr/local/etc/php-fpm.d/www.conf 2>/dev/null || true
 
 # Set permissions
@@ -65,6 +66,6 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod +x /var/www/html/docker-entrypoint.sh
 
-EXPOSE 8080
+EXPOSE 80 8080 9000
 
 ENTRYPOINT ["/var/www/html/docker-entrypoint.sh"]

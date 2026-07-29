@@ -4,11 +4,24 @@ set -e
 # Default PORT to 8080 if not set by Railway
 export PORT=${PORT:-8080}
 
+# Generate non-duplicate listen directives covering $PORT, 80, 8080, and 9000
+LISTEN_PORTS="listen ${PORT}; listen [::]:${PORT};"
+if [ "$PORT" != "80" ]; then
+    LISTEN_PORTS="$LISTEN_PORTS listen 80;"
+fi
+if [ "$PORT" != "8080" ]; then
+    LISTEN_PORTS="$LISTEN_PORTS listen 8080;"
+fi
+if [ "$PORT" != "9000" ]; then
+    LISTEN_PORTS="$LISTEN_PORTS listen 9000;"
+fi
+export LISTEN_PORTS
+
 # Clean any existing conf.d / http.d defaults to prevent conflict
 rm -rf /etc/nginx/conf.d/* /etc/nginx/http.d/*
 
-# Substitute $PORT into full standalone /etc/nginx/nginx.conf
-envsubst '${PORT}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+# Substitute $LISTEN_PORTS into full standalone /etc/nginx/nginx.conf
+envsubst '${LISTEN_PORTS}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
 # Fallback APP_URL if empty or malformed
 if [ -z "$APP_URL" ] || [ "$APP_URL" = "https://" ] || [ "$APP_URL" = "http://" ]; then
