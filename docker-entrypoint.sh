@@ -4,9 +4,11 @@ set -e
 # Default PORT to 80 if not set
 export PORT=${PORT:-80}
 
-# Clean default Nginx configs & substitute $PORT in Nginx template
-rm -f /etc/nginx/http.d/*.conf /etc/nginx/conf.d/*.conf
-envsubst '${PORT}' < /etc/nginx/http.d/default.template > /etc/nginx/http.d/default.conf
+# Clean any existing conf.d / http.d defaults to prevent conflict
+rm -rf /etc/nginx/conf.d/* /etc/nginx/http.d/*
+
+# Substitute $PORT into full standalone /etc/nginx/nginx.conf
+envsubst '${PORT}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
 echo "--- Preparing Laravel Application ---"
 
