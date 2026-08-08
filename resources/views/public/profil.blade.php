@@ -103,6 +103,65 @@
                         </iframe>
                     </div>
                 </div>
+
+                {{-- VR Kampung Pebadaran Banner --}}
+                <div class="mt-8 relative overflow-hidden rounded-2xl border border-white/10 shadow-xl bg-navy-900 p-0.5">
+                    <div class="relative rounded-[14px] overflow-hidden bg-navy-900">
+                        {{-- Glow orb --}}
+                        <div class="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-white/5 blur-3xl pointer-events-none"></div>
+                        <div class="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-white/5 blur-2xl pointer-events-none"></div>
+
+                        <div class="relative flex flex-col md:flex-row items-center gap-6 p-6 md:p-8">
+                            {{-- VR Icon --}}
+                            <div class="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center shadow-inner">
+                                <svg class="w-10 h-10 md:w-12 md:h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 3.75H5.25a1.5 1.5 0 00-1.5 1.5v4.5m5.25-6h9a1.5 1.5 0 011.5 1.5v4.5m0 0v9a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-9m15 0H3.75m5.25 0a2.25 2.25 0 104.5 0 2.25 2.25 0 00-4.5 0z" />
+                                </svg>
+                            </div>
+
+                            {{-- Content --}}
+                            <div class="flex-1 text-center md:text-left">
+                                <span class="inline-block px-3 py-1 rounded-full bg-white/15 text-white text-xs font-bold uppercase tracking-widest mb-2 border border-white/20">
+                                    Program Kerja KUKERTA
+                                </span>
+                                <h3 class="text-xl md:text-2xl font-heading font-bold text-white mb-1.5 leading-tight">
+                                    Virtual Reality Kampung Pebadaran
+                                </h3>
+                                <p class="text-white/60 text-sm md:text-base leading-relaxed max-w-xl">
+                                    Jelajahi Desa Pebadaran secara imersif melalui tur virtual 360°. Lihat setiap sudut kampung kami dari mana saja dan kapan saja menggunakan teknologi Virtual Reality.
+                                </p>
+                                <div class="mt-2 flex flex-wrap gap-2 justify-center md:justify-start">
+                                    <span class="inline-flex items-center gap-1.5 text-xs text-white/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+                                        <svg class="w-3 h-3 text-white/80" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3"/></svg>
+                                        Tersedia Online
+                                    </span>
+                                    <span class="inline-flex items-center gap-1.5 text-xs text-white/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+                                        <svg class="w-3 h-3 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
+                                        Tour 360° Imersif
+                                    </span>
+                                    <span class="inline-flex items-center gap-1.5 text-xs text-white/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+                                        <svg class="w-3 h-3 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                                        Mendukung VR Headset
+                                    </span>
+                                </div>
+                            </div>
+
+                            {{-- CTA Button --}}
+                            <div class="flex-shrink-0">
+                                <a href="https://pebadaran-vr.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                   class="group inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-white hover:bg-white/90 text-navy-900 font-bold text-sm md:text-base shadow-lg transition-all duration-300 hover:scale-105 whitespace-nowrap">
+                                    <svg class="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Jelajahi VR Desa
+                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Visi Misi -->
