@@ -11,7 +11,7 @@
 </section>
 
 <!-- Content with Tabs -->
-<section class="py-12 bg-cream min-h-screen" x-data="{ activeTab: 'sejarah', showPdfModal: false }">
+<section class="py-12 bg-cream min-h-screen" x-data="{ activeTab: 'sejarah', showPdfModal: false, showVrModal: false }">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         
         <!-- Tab Navigation -->
@@ -146,17 +146,23 @@
                                 </div>
                             </div>
 
-                            {{-- CTA Button --}}
-                            <div class="flex-shrink-0">
-                                <a href="https://pebadaran-vr.vercel.app/" target="_blank" rel="noopener noreferrer"
+                            {{-- CTA Buttons --}}
+                            <div class="flex-shrink-0 flex flex-col gap-2">
+                                {{-- Buka di dalam website --}}
+                                <button @click="showVrModal = true"
                                    class="group inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-white hover:bg-white/90 text-navy-900 font-bold text-sm md:text-base shadow-lg transition-all duration-300 hover:scale-105 whitespace-nowrap">
-                                    <svg class="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                     Jelajahi VR Desa
-                                    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                </button>
+                                {{-- Buka di tab baru --}}
+                                <a href="https://pebadaran-vr.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                   class="group inline-flex items-center justify-center gap-2 px-6 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white/80 font-medium text-xs border border-white/20 transition-all duration-300 whitespace-nowrap">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                                     </svg>
+                                    Buka Tab Baru
                                 </a>
                             </div>
                         </div>
@@ -558,6 +564,69 @@
             </div>
             <div class="flex-grow w-full bg-gray-900">
                 <iframe src="{{ asset('bukuProfile.pdf') }}" class="w-full h-full border-0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- VR Fullscreen Modal -->
+    <div x-show="showVrModal"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95"
+         class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-navy-900/90 backdrop-blur-md"
+         @keydown.escape.window="showVrModal = false"
+         style="display: none;">
+
+        <div class="absolute inset-0" @click="showVrModal = false"></div>
+
+        <div class="relative w-full max-w-7xl h-[95vh] bg-navy-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col z-10 border border-white/10">
+            {{-- Modal Header --}}
+            <div class="bg-navy-900 text-white px-4 sm:px-6 py-3 flex items-center justify-between border-b border-white/10 flex-shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.75H5.25a1.5 1.5 0 00-1.5 1.5v4.5m5.25-6h9a1.5 1.5 0 011.5 1.5v4.5m0 0v9a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-9m15 0H3.75m5.25 0a2.25 2.25 0 104.5 0 2.25 2.25 0 00-4.5 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-heading font-semibold text-base sm:text-lg text-white leading-tight">Virtual Reality Kampung Pebadaran</h3>
+                        <p class="text-white/50 text-xs hidden sm:block">Gunakan mouse/touchpad untuk menjelajahi lingkungan 360°</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="https://pebadaran-vr.vercel.app/" target="_blank" rel="noopener noreferrer"
+                       class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/10 text-white hover:bg-white/20 border border-white/20 transition">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        Tab Baru
+                    </a>
+                    <button @click="showVrModal = false"
+                            class="w-8 h-8 flex items-center justify-center rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            {{-- VR iframe --}}
+            <div class="flex-grow w-full bg-black relative">
+                {{-- Loading indicator --}}
+                <div class="absolute inset-0 flex flex-col items-center justify-center bg-navy-900 z-10"
+                     x-show="showVrModal"
+                     x-init="$watch('showVrModal', val => { if(val) { setTimeout(() => $el.style.display = 'none', 2000) } else { $el.style.display = 'flex' } })">
+                    <div class="w-12 h-12 rounded-full border-4 border-white/20 border-t-white animate-spin mb-4"></div>
+                    <p class="text-white/60 text-sm">Memuat Virtual Reality...</p>
+                </div>
+                <iframe
+                    x-show="showVrModal"
+                    src="https://pebadaran-vr.vercel.app/"
+                    class="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; xr-spatial-tracking; fullscreen"
+                    allowfullscreen
+                    loading="lazy"
+                    title="Virtual Reality Kampung Pebadaran">
+                </iframe>
             </div>
         </div>
     </div>
